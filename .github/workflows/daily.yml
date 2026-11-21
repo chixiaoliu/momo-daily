@@ -1,4 +1,4 @@
-name: daily-article
+﻿name: daily-article
 
 # 每天 07:00（北京时间）自动生成当天文章并发布到 GitHub Pages
 # 23:00 UTC = 次日 07:00 北京
@@ -36,13 +36,13 @@ jobs:
           python prototype/momo_daily.py --out prototype/output
 
       - name: 打包成静态站
-        run: python prototype/build_static.py --out site
+        run: python prototype/build_static.py --out docs
 
       - name: 提交结果
         run: |
           git config user.name "momo-daily-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add site
+          git add docs
           if git diff --cached --quiet; then
             echo "今天没有新内容"
           else
