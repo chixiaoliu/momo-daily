@@ -1,4 +1,4 @@
-﻿name: daily-article
+name: daily-article
 
 # 每天 07:00（北京时间）自动生成当天文章并发布到 GitHub Pages
 # 23:00 UTC = 次日 07:00 北京
@@ -33,7 +33,13 @@ jobs:
           MOMO_MODE: single
           MOMO_LEVEL: B1 (CET-4)
         run: |
-          python prototype/momo_daily.py --out prototype/output
+          ok=0
+          for i in 1 2 3; do
+            if python prototype/momo_daily.py --out prototype/output; then ok=1; break; fi
+            echo "第 $i 次失败（墨墨接口偶尔 503），20 秒后重试"
+            sleep 20
+          done
+          [ "$ok" = "1" ] || { echo "三次都失败，今天没有生成"; exit 1; }
 
       - name: 打包成静态站
         run: python prototype/build_static.py --out docs
