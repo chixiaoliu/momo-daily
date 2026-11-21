@@ -1,24 +1,18 @@
 # 部署到 Render（让别人用自己的 Token 使用）
 
+> **一键入口**：<https://render.com/deploy?repo=https://github.com/chixiaoliu/momo-daily>
+>
+> 打开后登录 Render（用 GitHub 账号点一下即可，免费档不用信用卡），它会自动读 `render.yaml` 并部署。
+
 这个文件夹是给公网用的**精简副本**：只有代码和样例文章，不含任何个人 Token、你的文章、缓存。
 
-## 一、推到 GitHub（2 分钟）
+## 一、代码已经推好了
 
-1. 打开 <https://github.com/new>，仓库名 `momo-daily`，Private 或 Public 都行，**不要**勾选任何初始化文件
-2. 在这个文件夹里执行：
+仓库：<https://github.com/chixiaoliu/momo-daily>（private，23 个文件，无 `.env`）
 
-```powershell
-git init
-git add .
-git commit -m "momo-daily"
-git branch -M main
-git remote add origin https://github.com/你的用户名/momo-daily.git
-git push -u origin main
-```
+如果你换了机器或想重新推，命令在 `## 一、推到 GitHub` 里。
 
-推送前可以确认一眼：`git status` 里不应该出现 `.env`、`output/`、`data/`。
-
-## 二、Render 部署（2 分钟）
+## 二、Render 部署（1 分钟）
 
 1. <https://render.com> → 用 GitHub 登录
 2. **New** → **Blueprint** → 选 `momo-daily` 仓库 → **Apply**
