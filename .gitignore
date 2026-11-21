@@ -1,0 +1,12 @@
+# 个人配置与产物，绝不入库
+.env
+*.key
+
+# python
+__pycache__/
+*.pyc
+
+# 运行时数据
+prototype/output/
+prototype/data/
+prototype/cache/

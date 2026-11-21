@@ -1,0 +1,35 @@
+{
+  "title": "The Clockmaker's Rule",
+  "title_cn": "修钟人的规矩",
+  "logline": "一封要拆掉她铺子的信到了，她只做了一件事：给最老的钟上弦。",
+  "level": "B2",
+  "paragraphs": [
+    "Nadia had inherited the workshop, and with it a rule she could not abandon: never sell a clock you have not heard strike. She would absorb the smell of brass and oil for hours, until the street outside went quiet. People called her work abstract, as if repairing a mechanism had nothing to do with memory.",
+    "The shop was small and could not accommodate more than two customers at a time. Yet small things accumulate: springs in jam jars, dials without hands, a drawer of keys that opened nothing. Nadia kept an accurate ledger of every repair, down to the minute a clock was collected.",
+    "She acknowledged that her prices were high and never apologised for it. Anyone hoping to acquire a clock cheaply was politely sent to the market. She would rather adapt an old movement than replace it, even in months when the work was barely adequate to cover the rent.",
+    "Her neighbour, Mr Okafor, was an ambitious man who advocated for the demolition of the old harbour wall. He wanted glass towers and a bright promenade — an aesthetic the town could sell to visitors. Nadia found his plans ambiguous. Nothing in them said what would happen to the people who repaired things.",
+    "She did not anticipate the letter that arrived on a Tuesday, stamped by the harbour authority. It said the workshop would be demolished in spring. Nadia read it twice, then wound the oldest clock in the shop and waited for it to strike."
+  ],
+  "targets": [
+    "abandon", "absorb", "abstract", "accommodate", "accumulate",
+    "accurate", "acknowledge", "acquire", "adapt", "adequate",
+    "ambitious", "advocate", "aesthetic", "ambiguous", "anticipate"
+  ],
+  "glosses": [
+    {"word": "abandon", "ipa": "/əˈbændən/", "pos": "v.", "cn": "放弃；抛弃"},
+    {"word": "absorb", "ipa": "/əbˈzɔːb/", "pos": "v.", "cn": "吸收；沉浸于"},
+    {"word": "abstract", "ipa": "/ˈæbstrækt/", "pos": "adj.", "cn": "抽象的；不切实际的"},
+    {"word": "accommodate", "ipa": "/əˈkɒmədeɪt/", "pos": "v.", "cn": "容纳；为…提供空间"},
+    {"word": "accumulate", "ipa": "/əˈkjuːmjəleɪt/", "pos": "v.", "cn": "积累；越堆越多"},
+    {"word": "accurate", "ipa": "/ˈækjərət/", "pos": "adj.", "cn": "精确的；准确的"},
+    {"word": "acknowledge", "ipa": "/əkˈnɒlɪdʒ/", "pos": "v.", "cn": "承认；认可"},
+    {"word": "acquire", "ipa": "/əˈkwaɪə(r)/", "pos": "v.", "cn": "获得；购得"},
+    {"word": "adapt", "ipa": "/əˈdæpt/", "pos": "v.", "cn": "改造；使适应"},
+    {"word": "adequate", "ipa": "/ˈædɪkwət/", "pos": "adj.", "cn": "足够的；勉强够用的"},
+    {"word": "ambitious", "ipa": "/æmˈbɪʃəs/", "pos": "adj.", "cn": "有野心的；宏大的"},
+    {"word": "advocate", "ipa": "/ˈædvəkeɪt/", "pos": "v.", "cn": "主张；提倡"},
+    {"word": "aesthetic", "ipa": "/iːsˈθetɪk/", "pos": "adj./n.", "cn": "审美的；美学风格"},
+    {"word": "ambiguous", "ipa": "/æmˈbɪɡjuəs/", "pos": "adj.", "cn": "含糊不清的；可作多种解释的"},
+    {"word": "anticipate", "ipa": "/ænˈtɪsɪpeɪt/", "pos": "v.", "cn": "预料；预期"}
+  ]
+}

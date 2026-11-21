@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf8f3">
+<title>momo·daily</title>
+<style>
+:root{
+  --paper:#fbf8f3;--ink:#211f1b;--muted:#8a8175;--line:#e7dfd2;--accent:#2f6f73;
+  --accent-ink:#1f4f52;--warn:#b46b2a;--ok:#2f7d5d;--card:#fff;
+  --shadow:0 1px 2px rgba(40,32,20,.04),0 8px 24px rgba(40,32,20,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#161513;--ink:#eae6dd;--muted:#9a9184;--line:#302d27;--accent:#7fc4c0;
+    --accent-ink:#a8dad6;--warn:#e0a86a;--ok:#7fcaa8;--card:#22201c;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:1.65;
+  font-family:ui-sans-serif,system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+a{color:var(--accent);text-decoration:none}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:14px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:9;
+  background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px)}
+.brand{font-weight:650;font-size:15px}.brand span{color:var(--accent)}
+.tabs{display:flex;gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--card);color:var(--muted);
+  border-radius:99px;padding:5px 13px;font-size:12.5px;cursor:pointer;font:inherit}
+.tabs button.on{border-color:var(--accent);color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 9%,transparent)}
+main{max-width:680px;margin:0 auto;padding:22px 20px 80px}
+.view{display:none}.view.on{display:block}
+h1{font-size:22px;margin:4px 0 4px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 16px}
+input,select{font:inherit;font-size:14px;padding:9px 12px;border-radius:10px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--accent)}
+input[type=date]{width:auto}
+button.primary{background:var(--accent);color:#fff;border:0;border-radius:10px;
+  padding:10px 18px;font-size:13.5px;font-weight:600;cursor:pointer;font:inherit}
+button.primary:hover{background:var(--accent-ink)}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);
+  border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;font:inherit}
+button.ghost:hover{border-color:var(--accent);color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.banner{padding:12px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);
+  font-size:13px;margin:0 0 16px}
+.banner.warn{border-color:color-mix(in srgb,var(--warn) 40%,var(--line));
+  background:color-mix(in srgb,var(--warn) 7%,var(--card))}
+.banner.ok{border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+.card{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:13px;
+  background:var(--card);box-shadow:var(--shadow);color:inherit;margin:0 0 9px}
+.card:hover{border-color:var(--accent)}
+.card .t{font-family:Georgia,"Times New Roman",serif;font-size:16px;font-weight:600}
+.card .c{font-size:12px;color:var(--muted);margin-top:2px}
+.card .m{font-size:12px;color:var(--muted);margin-top:5px;display:flex;gap:12px;flex-wrap:wrap}
+.dayrow{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+  margin:18px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+.log{margin:12px 0 0;max-height:200px;overflow:auto;font-family:ui-monospace,Consolas,monospace;
+  font-size:11.5px;line-height:1.7;color:var(--muted);white-space:pre-wrap}
+.hidden{display:none!important}
+label{display:block;font-size:12.5px;color:var(--muted);margin:16px 0 5px}
+.note{font-size:12px;color:var(--muted);margin:6px 0 0;line-height:1.7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--muted);line-height:1.8}
+pre.out{margin:12px 0 0;padding:11px 13px;border-radius:10px;border:1px solid var(--line);
+  background:var(--paper);font-size:12px;white-space:pre-wrap;color:var(--muted)}
+@media (max-width:420px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="brand">momo<span>·</span>daily</div>
+  <div class="tabs">
+    <button data-v="gen" class="on">生成</button>
+    <button data-v="arch">归档</button>
+    <button data-v="setup">设置</button>
+  </div>
+</div>
+
+<main>
+  <!-- 生成 -->
+  <section class="view on" id="v-gen">
+    <h1>今天读什么</h1>
+    <p class="sub" id="gen-sub">正在连接后端…</p>
+    <div id="gen-banner"></div>
+    <div class="row">
+      <input type="date" id="day">
+      <button class="primary" id="gen-btn">生成</button>
+      <button class="ghost" id="demo-btn">先看样例</button>
+    </div>
+    <div id="progress" class="hidden">
+      <div class="banner">生成中，别关页面…</div>
+      <div class="log" id="log"></div>
+    </div>
+    <div id="chapters"></div>
+    <div id="history"></div>
+  </section>
+
+  <!-- 归档 -->
+  <section class="view" id="v-arch">
+    <h1>归档</h1>
+    <p class="sub" id="arch-sub"></p>
+    <div id="arch-body"></div>
+  </section>
+
+  <!-- 设置 -->
+  <section class="view" id="v-setup">
+    <h1>设置</h1>
+    <p class="sub">填你自己的墨墨 Token 和模型 Key，它们只保存在后端属于你这次访问的空间里。</p>
+
+    <label>墨墨开放 API Token</label>
+    <input type="password" id="p-token" autocomplete="off" spellcheck="false">
+    <p class="note">App → 我的 → 开放 API → 复制。需在 App 内开启「自动同步」。</p>
+
+    <label>模型 Key</label>
+    <input type="password" id="p-key" autocomplete="off" spellcheck="false">
+    <p class="note">DeepSeek 控制台 → API keys，也可以用任何 OpenAI 兼容服务。</p>
+
+    <div class="grid2">
+      <div><label>接口地址</label><input id="p-base" spellcheck="false"></div>
+      <div><label>模型名</label><input id="p-model" spellcheck="false"></div>
+    </div>
+
+    <div class="grid2">
+      <div><label>生成方式</label>
+        <select id="p-mode">
+          <option value="single">一次生成一篇</option>
+          <option value="split">按篇拆分</option>
+        </select></div>
+      <div><label>难度</label>
+        <select id="p-level">
+          <option value="A2 (初中)">A2 · 初中 / 会考</option>
+          <option value="B1 (CET-4)">B1 · 大学四级 CET-4</option>
+          <option value="B2 (CET-6)">B2 · 大学六级 CET-6</option>
+          <option value="B2 (考研)">B2 · 考研英语</option>
+          <option value="B2 (IELTS 6.0)">B2 · 雅思 6.0</option>
+          <option value="C1 (IELTS 7.0)">C1 · 雅思 7.0 / 托福 100</option>
+          <option value="C1 (GRE)">C1 · GRE</option>
+        </select></div>
+    </div>
+
+    <label>每篇最少 10 个词（仅拆分模式）</label>
+    <input type="number" id="p-per" min="10" max="60" value="20">
+
+    <div class="row" style="margin-top:22px">
+      <button class="primary" id="save-btn">保存</button>
+      <button class="ghost" id="test-btn">测试连接</button>
+    </div>
+    <p class="note" id="setup-msg"></p>
+    <pre class="out hidden" id="setup-out"></pre>
+  </section>
+
+  <footer id="foot">momo·daily · 前端在 Cloudflare Pages，后端在 Render</footer>
+</main>
+
+<script src="config.js"></script>
+<script>
+const API = ((new URLSearchParams(location.search).get('api') || window.MOMO_API || '')).replace(/\/+$/, '');
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let SID = localStorage.getItem('momo_sid');
+if(!SID){
+  SID = [...crypto.getRandomValues(new Uint8Array(8))].map(b => b.toString(16).padStart(2,'0')).join('');
+  localStorage.setItem('momo_sid', SID);
+}
+
+async function api(path, body){
+  const opt = {headers: {'X-Momo-Sid': SID}};
+  if(body){ opt.method = 'POST'; opt.headers['Content-Type'] = 'application/json'; opt.body = JSON.stringify(body); }
+  const r = await fetch(API + path, opt);
+  const text = await r.text();
+  if(!r.ok) throw new Error(text.slice(0, 180) || ('HTTP ' + r.status));
+  try { return JSON.parse(text); } catch { return {}; }
+}
+
+let state = null, poll = null;
+
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+
+async function refresh(){
+  const day = $('day').value || todayStr();
+  try{
+    state = await api('/api/state?date=' + encodeURIComponent(day));
+  }catch(e){
+    $('gen-sub').textContent = '连不上后端';
+    $('gen-banner').innerHTML = `<div class="banner warn"><b>后端没响应</b><br>${esc(e.message)}</div>`;
+    return;
+  }
+  render();
+}
+
+function render(){
+  const s = state, cfg = s.cfg, sel = s.selected, arts = s.articles || [];
+  $('gen-sub').textContent = s.selected_label + (arts.length ? ` · 已生成 ${arts.length} 篇` : ' · 还没有文章');
+
+  let banner = '';
+  if(!cfg.token_set){
+    banner = '<div class="banner warn"><b>还没填墨墨 Token</b><br>去「设置」填你自己的，才能取到当天要背的词。</div>';
+  }else if(!cfg.llm_key_set){
+    banner = '<div class="banner warn"><b>还没填模型 Key</b><br>生成文章需要一个大模型接口。</div>';
+  }else{
+    banner = `<div class="banner ok">已就绪 · ${esc(cfg.model)} · ${cfg.mode === 'split' ? '每篇 ' + esc(cfg.per) + ' 词' : '一次一篇'}</div>`;
+  }
+  $('gen-banner').innerHTML = banner;
+
+  $('chapters').innerHTML = arts.map(a => `
+    <a class="card" href="${API}/read/${sel}/${a.file}" target="_blank" rel="noopener">
+      <div class="t">${esc(a.title)}</div>
+      ${a.title_cn ? `<div class="c">${esc(a.title_cn)}</div>` : ''}
+      <div class="m"><span>${a.targets} 个词</span><span>${a.words} 词</span>
+      <span>覆盖 ${Math.round((a.coverage || 0) * 100)}%</span></div>
+    </a>`).join('');
+
+  const hist = s.history || [];
+  $('history').innerHTML = hist.length
+    ? '<div class="dayrow"><span>历史</span><span></span></div>' + hist.map(d => `
+        <div class="dayrow"><a href="#" data-day="${d.date}">${d.date}</a>
+        <span>${d.count} 篇</span></div>`).join('')
+    : '';
+
+  $('arch-sub').textContent = hist.length ? `一共 ${hist.length} 天` : '还没有生成过文章';
+  $('arch-body').innerHTML = hist.map(d => `
+    <div class="dayrow"><a href="#" data-day="${d.date}">${d.date}</a><span>${d.count} 篇 · ${esc(d.title)}</span></div>`).join('');
+
+  $('p-base').value = cfg.base_url || '';
+  $('p-model').value = cfg.model || '';
+  $('p-mode').value = cfg.mode || 'single';
+  $('p-level').value = cfg.level || 'B1 (CET-4)';
+  $('p-per').value = cfg.per || '20';
+}
+
+async function start(mode){
+  $('progress').classList.remove('hidden');
+  $('log').textContent = '正在启动…';
+  $('gen-btn').disabled = true; $('demo-btn').disabled = true;
+  try{
+    const r = await api('/api/generate', {mode, date: $('day').value});
+    if(!r.started){ $('log').textContent = r.message || '已有任务在跑'; return; }
+    if(!poll) poll = setInterval(tick, 1200);
+  }catch(e){
+    $('log').textContent = '✗ ' + e.message;
+    $('gen-btn').disabled = false; $('demo-btn').disabled = false;
+  }
+}
+
+async function tick(){
+  try{
+    const j = await api('/api/job');
+    $('log').textContent = (j.log || []).join('\n');
+    $('log').scrollTop = $('log').scrollHeight;
+    if(j.state === 'running') return;
+    clearInterval(poll); poll = null;
+    $('gen-btn').disabled = false; $('demo-btn').disabled = false;
+    if(j.state === 'error'){ $('log').textContent += '\n\n✗ ' + (j.error || '未知错误'); }
+    else { $('progress').classList.add('hidden'); await refresh(); }
+  }catch(e){ /* 忽略抖动 */ }
+}
+
+// 事件
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + b.dataset.v));
+});
+$('day').value = todayStr();
+$('day').onchange = refresh;
+$('gen-btn').onclick = () => start('api');
+$('demo-btn').onclick = () => start('demo');
+document.body.addEventListener('click', e => {
+  const a = e.target.closest('[data-day]');
+  if(a){ e.preventDefault(); $('day').value = a.dataset.day; refresh();
+    document.querySelector('[data-v=gen]').click(); }
+});
+
+$('save-btn').onclick = async () => {
+  const body = {
+    LLM_BASE_URL: $('p-base').value.trim(),
+    LLM_MODEL: $('p-model').value.trim(),
+    MOMO_MODE: $('p-mode').value,
+    MOMO_LEVEL: $('p-level').value,
+  };
+  if($('p-token').value.trim()) body.MAIMEMO_TOKEN = $('p-token').value.trim();
+  if($('p-key').value.trim()) body.LLM_API_KEY = $('p-key').value.trim();
+  if(body.MOMO_MODE === 'split') body.MOMO_PER = $('p-per').value;
+  $('setup-msg').textContent = '保存中…';
+  try{
+    await api('/api/config', body);
+    $('p-token').value = ''; $('p-key').value = '';
+    $('setup-msg').textContent = '✓ 已保存';
+    await refresh();
+  }catch(e){ $('setup-msg').textContent = '✗ ' + e.message; }
+};
+
+$('test-btn').onclick = async () => {
+  $('setup-out').classList.remove('hidden');
+  $('setup-out').textContent = '测试中…';
+  try{
+    const r = await api('/api/test', {});
+    $('setup-out').textContent =
+      (r.momo.ok ? '✓ 墨墨：' : '✗ 墨墨：') + r.momo.msg + '\n' +
+      (r.llm.ok ? '✓ 模型：' : '✗ 模型：') + r.llm.msg;
+  }catch(e){ $('setup-out').textContent = '✗ ' + e.message; }
+};
+
+if(!API) $('foot').textContent = '提示：web/config.js 里的 MOMO_API 还没填，当前按同源处理';
+refresh();
+</script>
+</body>
+</html>
