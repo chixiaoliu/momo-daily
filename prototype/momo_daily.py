@@ -1,4 +1,4 @@
-﻿"""momo-daily —— 把「今天背的单词」变成「今天读的故事」。
+"""momo-daily —— 把「今天背的单词」变成「今天读的故事」。
 
 用法（在 prototype 目录下）：
     python momo_daily.py --demo            # 不需要任何 Key，先看效果
@@ -98,17 +98,18 @@ def main() -> int:
     else:
         try:
             client = MomoClient()
-            words, source = client.today_new_words(), "maimemo-api"
+            words, source = client.today_words(), "maimemo-api"
             prog = client.progress()
-            log(f"[1/4] 墨墨今日新学：{len(words)} 个词"
+            log(f"[1/4] 墨墨今日单词：{len(words)} 个"
                 f"（进度 {prog.get('finished', '?')}/{prog.get('total', '?')}）")
             if not words:
-                log("      今天还没有新学词，改用示例词演示。")
-                words, source = SAMPLE_WORDS[: args.per], "sample"
+                log("      今天墨墨里还没有单词（可能还没开始学，或没开「自动同步」）。")
+                log("      想先看效果可以加 --demo 或 --sample。")
+                return 1
         except (MomoError, OSError) as exc:
             log(f"[1/4] 读取墨墨失败：{exc}")
-            log("      退回示例词。可先用 --words 手动给词表。")
-            words, source = SAMPLE_WORDS[: args.per], "sample"
+            log("      可先用 --words 手动给词表，或 --demo 看效果。")
+            return 1
 
     if not words:
         log("没有可用的单词，退出。")

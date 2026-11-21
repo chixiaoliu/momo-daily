@@ -117,6 +117,16 @@ class MomoClient:
         items = sorted(self.today_items(is_new=True, limit=limit), key=lambda x: x.get("order", 0))
         return [i.get("voc_spelling") for i in items if i.get("voc_spelling")]
 
+    def today_words(self, limit: int = 1000) -> list[str]:
+        """今日要过的全部词：新学 + 复习，新词排前面。
+
+        墨墨每天的「新学」经常是 0（当天全是复习），只取新词会导致空手而归。
+        """
+        items = sorted(self.today_items(limit=limit), key=lambda x: x.get("order", 0))
+        new = [i for i in items if i.get("is_new")]
+        rest = [i for i in items if not i.get("is_new")]
+        return [i.get("voc_spelling") for i in new + rest if i.get("voc_spelling")]
+
     def today_forgotten_words(self, limit: int = 1000) -> list[str]:
         """今日点了「忘记」的单词——最适合优先编进文章。"""
         items = self.today_items(is_finished=True, limit=limit)
